@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block nav %}
+    {% if request.user.is_authenticated %}
+{#        <li class="nav-item">#}
+{#            <a class="nav-link" href="{% url "webapp:create_photo" %}">Добавление фотографии</a>#}
+{#        </li>#}
+{#        <li class="nav-item">#}
+{#            <a class="nav-link" href="{% url "webapp:article_comment_create" article.pk %}">Добавить коммент</a>#}
+{#        </li>#}
+{##}
+{#        <li class="nav-item">#}
+{#            <a class="nav-link" href="{% url "webapp:delete_article" article.pk %}">Удалить</a>#}
+{#        </li>#}
+{##}
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        {% for album in albums %}
+            <div class="card col-12 col-md-6 col-lg-4" style="width: 18rem;">
+                <div class="card-body">
+                    <a class="card-title" href="#">Название:{{ album.name }}</a>
+                    <h5 class="card-title">Описание: {{ album.description }}</h5>
+                    <h5 class="card-title">Автор альбома: {{ album.author_album }}</h5>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

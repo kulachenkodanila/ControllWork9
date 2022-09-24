@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block nav %}
+    <li class="nav-item">
+            <a class="nav-link" href="{% url "webapp:album_index" %}">Альбомы</a>
+        </li>
+    {% if request.user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url "webapp:create_photo" %}">Добавление фотографии</a>
+        </li>
+
+{##}
+{#        <li class="nav-item">#}
+{#            <a class="nav-link" href="{% url "webapp:delete_article" article.pk %}">Удалить</a>#}
+{#        </li>#}
+{##}
+    {% endif %}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        {% for photo in photos %}
+            <div class="card col-12 col-md-6 col-lg-4" style="width: 18rem;">
+                <img src="{{ photo.image.url }}" class="card-img-top" alt="#">
+                <div class="card-body">
+                    <a class="card-title" href="{% url "webapp:photo_view" photo.pk %}">Подпись:{{ photo.signature }}</a>
+                    <h5 class="card-title">Автор: {{ photo.author }}</h5>
+                    <h5 class="card-title">Дата добавления: {{ photo.created_at }}</h5>
+                    <a href="{{ photo.album }}" class="card-link btn btn-primary">Альбом: {{ photo.album.name }}</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
