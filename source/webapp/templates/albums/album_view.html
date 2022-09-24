@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block nav %}
+    {% if request.user.is_authenticated %}
+
+                {% if perms.webapp.change_album or user == album.author_album %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "webapp:update_album" album.pk %}">Редактировать</a>
+                    </li>
+                {% endif %}
+                {% if perms.webapp.delete_album or user == album.author_album %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "webapp:delete_album" album.pk %}">Удалить</a>
+                    </li>
+                {% endif %}
+        {#        <li class="nav-item">#}
+        {#            <a class="nav-link" href="{% url "webapp:delete_photo" photo.pk %}">Альбомы</a>#}
+        {#        </li>#}
+
+
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="card col-12 col-md-6 col-lg-4" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Название: {{ album.name }}</h5>
+            <h5 class="card-title">Описание: {{ album.description }}</h5>
+            <div class="row">
+                {% for photo in album.albums_photo.all %}
+                    <div class="card col-12 col-md-6 col-lg-4" style="width: 18rem;">
+                        <div class="card-body">
+                            <img src="{{ photo.image.url }}" class="card-img-top" alt="#">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
